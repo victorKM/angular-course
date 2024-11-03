@@ -5,6 +5,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { AuthGuard } from './guards/auth.guard';
 import { CursosGuard } from './guards/cursos.guard';
 import { AlunosGuard } from './guards/alunos.guard';
+import { AlunosDeactivateGuard } from './guards/alunos-deactivate.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -15,9 +16,9 @@ export const routes: Routes = [
   },
   { path: 'login', loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)},
   { path: 'alunos', loadComponent: () => import('./alunos/alunos.component').then(c => c.AlunosComponent), children: [
-    { path: 'novo', loadComponent: () => import('./alunos/aluno-form/aluno-form.component').then(c => c.AlunoFormComponent), canActivate: [AuthGuard] },
-    { path: ':id', loadComponent: () => import('./alunos/aluno-detalhe/aluno-detalhe.component').then(c => c.AlunoDetalheComponent), canActivate: [AuthGuard] },
-    { path: ':id/editar', loadComponent: () => import('./alunos/aluno-form/aluno-form.component').then(c => c.AlunoFormComponent), canActivate: [AuthGuard] },
+    { path: 'novo', loadComponent: () => import('./alunos/aluno-form/aluno-form.component').then(c => c.AlunoFormComponent),  },
+    { path: ':id', loadComponent: () => import('./alunos/aluno-detalhe/aluno-detalhe.component').then(c => c.AlunoDetalheComponent),  },
+    { path: ':id/editar', loadComponent: () => import('./alunos/aluno-form/aluno-form.component').then(c => c.AlunoFormComponent),  canDeactivate: [AlunosDeactivateGuard]},
   ], canActivate: [AuthGuard], canActivateChild: [AlunosGuard]},
 ];
 
