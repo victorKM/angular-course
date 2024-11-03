@@ -29,7 +29,7 @@ export class CursosComponent implements OnInit{
   ngOnInit(){
     this.cursos = this.cursosService.getCursos();
 
-    this.inscricao = this.route.queryParams.subscribe( queryParams => {
+    this.inscricao = this.route.queryParams.subscribe(queryParams => {
       this.pagina = queryParams['pagina'];
     })
   }
