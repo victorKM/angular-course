@@ -29,6 +29,10 @@ export class TemplateFormComponent implements OnInit{
 
   onSubmit(form: any) {
     console.log(form);
+
+    this.http.post('https://httpbin.org/post', JSON.stringify(form.value))
+      .pipe(map(response => response))
+      .subscribe(dados => console.log(dados));
   }
 
   verificaValidTouched(campo: any) {
@@ -41,22 +45,62 @@ export class TemplateFormComponent implements OnInit{
     }
   }
 
-  consultarCEP(cep: any) {
+  consultarCEP(cep: any, form: any) {
     //Nova variável "cep" somente com dígitos
     cep = cep.replace(/\D/g, '');
 
     //Verifica se campo cep possui valor informado.
     if(cep != "") {
       var validacep = /^[0-9]{8}$/;
-
       if(validacep.test(cep)) {
+
+        this.resetaDadosForm(form);
 
         this.http.get(`//viacep.com.br/ws/${cep}/json`)
         .pipe(map((response: any) => response))
-        .subscribe(response => console.log(response));
-
+        .subscribe(response => this.populaDadosForm(response, form));
       }
     }
+  }
+
+  populaDadosForm(dados: any, formulario: any) {
+    // formulario.setValue({
+    //   nome: formulario.value.nome,
+    //   email: formulario.value.email,
+    //   endereco: {
+    //     cep: dados.cep,
+    //     numero: "",
+    //     complemento: "",
+    //     rua: dados.logradouro,
+    //     bairro: dados.bairro,
+    //     cidade: dados.localidade,
+    //     estado: dados.uf,
+    //   }
+    // });
+
+    formulario.form.patchValue({
+      endereco: {
+        cep: dados.cep,
+        complemento: "Casa",
+        rua: dados.logradouro,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf,
+      }
+    });
+  }
+
+  resetaDadosForm(formulario: any) {
+    formulario.form.patchValue({
+      endereco: {
+        cep: null,
+        complemento: null,
+        rua: null,
+        bairro: null,
+        cidade: null,
+        estado: null,
+      }
+    });
   }
 
 }
