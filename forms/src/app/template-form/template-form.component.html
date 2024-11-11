@@ -3,15 +3,24 @@
     <label for="nome" class="form-label">Nome</label>
     <input name="nome" type="text" class="form-control"
     id="nome" placeholder="Nome" [ngModel]="usuario.nome"
-    required>
+    required #nome >
   </div>
 
   <div class="mb-3">
     <label for="email" class="form-label">Email</label>
     <input name="email" type="email" class="form-control"
     id="email" placeholder="Email" [ngModel]="usuario.email"
-    required email>
+    required email #email>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<!--
+
+Estado            | SIM         | NÃO
+Controle visitado |  ng-touched | ng-untouched
+Valor mudou       | ng-dirty    | ng-pristine
+Controle válido   | ng-valid    | ng-invalid
+
+-->

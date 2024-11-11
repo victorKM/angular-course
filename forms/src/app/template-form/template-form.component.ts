@@ -12,8 +12,8 @@ import { FormsModule } from '@angular/forms';
 export class TemplateFormComponent {
 
   usuario: any = {
-    nome: "Victor",
-    email: "victor@gmail.com"
+    nome: null,
+    email: null
   }
 
   onSubmit(form: any) {
