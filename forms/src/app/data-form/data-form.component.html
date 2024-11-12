@@ -11,8 +11,9 @@
     id="email" placeholder="nome@email.com">
   </div>
 
-  <div class="mb-3 col-md-12">
-    <button type="submit" class="btn btn-primary">Submit</button>
+  <div class="mb-3 col-md-6">
+    <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Submit</button>
+    <button class="btn btn-secondary" (click)="resetar()">Cancelar</button>
   </div>
 
   <app-form-debug [form]="formulario"></app-form-debug>

@@ -27,12 +27,15 @@ export class TemplateFormComponent implements OnInit{
 
   }
 
-  onSubmit(form: any) {
-    console.log(form);
+  onSubmit(formulario: any) {
+    console.log(formulario);
 
-    this.http.post('https://httpbin.org/post', JSON.stringify(form.value))
+    this.http.post('https://httpbin.org/post', JSON.stringify(formulario.value))
       .pipe(map(response => response))
-      .subscribe(dados => console.log(dados));
+      .subscribe(dados => {
+        console.log(dados);
+        formulario.form.reset();
+      });
   }
 
   verificaValidTouched(campo: any) {
