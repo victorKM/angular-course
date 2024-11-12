@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule } from '@angular/forms'
+import { FormDebugComponent } from './form-debug/form-debug.component';
 
 @Component({
   selector: 'app-root',

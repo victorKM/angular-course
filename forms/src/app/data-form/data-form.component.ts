@@ -1,3 +1,4 @@
+import { FormDebugComponent } from './../form-debug/form-debug.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -5,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule }
 @Component({
   selector: 'app-data-form',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, FormDebugComponent],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.scss'
 })

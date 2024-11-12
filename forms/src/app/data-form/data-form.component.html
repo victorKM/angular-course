@@ -1,1 +1,29 @@
-<p>data-form works!</p>
+<form class="row gy-2 gx-3 align-items-center" [formGroup]="formulario">
+  <div class="mb-3 col-md-12">
+    <label for="nome" class="form-label">Nome</label>
+    <input formControlName="nome" type="text" class="form-control"
+    id="nome" placeholder="Nome">
+  </div>
+
+  <div class="mb-3 col-md-12">
+    <label for="email" class="form-label">Email</label>
+    <input formControlName="email" type="email" class="form-control"
+    id="email" placeholder="nome@email.com">
+  </div>
+
+  <div class="mb-3 col-md-12">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+
+  <app-form-debug [form]="formulario"></app-form-debug>
+</form>
+
+
+<!--
+
+Estado            | SIM         | NÃO
+Controle visitado |  ng-touched | ng-untouched
+Valor mudou       | ng-dirty    | ng-pristine
+Controle válido   | ng-valid    | ng-invalid
+
+-->
