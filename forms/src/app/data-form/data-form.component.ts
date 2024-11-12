@@ -4,12 +4,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CampoControlErroComponent } from '../campo-control-erro/campo-control-erro.component';
 
 @Component({
   selector: 'app-data-form',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule,
-  FormDebugComponent, HttpClientModule],
+  FormDebugComponent, HttpClientModule, CampoControlErroComponent],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.scss'
 })
@@ -56,4 +57,24 @@ export class DataFormComponent implements OnInit{
     this.formulario.reset();
   }
 
+  aplicaCssErro(campo: any) {
+    return {
+      'is-invalid': this.verificaValidTouched(campo)
+    }
+  }
+
+  verificaValidTouched(campo: any) {
+    if(!this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  verificaEmailInvalido() {
+    let campoEmail = this.formulario.controls['email'];
+    if(campoEmail.errors) {
+      return campoEmail.errors['email'] && campoEmail.touched;
+    }
+  }
 }
