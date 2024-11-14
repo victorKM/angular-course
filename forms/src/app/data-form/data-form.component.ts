@@ -71,6 +71,7 @@ export class DataFormComponent implements OnInit{
       cargo: [null],
       tecnologias: [null],
       newsletter: ['s'],
+      termos: [false, Validators.pattern('true')]
     });
 
     //Validators.pattern(coloque o regex aqui em string)
@@ -99,7 +100,7 @@ export class DataFormComponent implements OnInit{
 
   verificaValidacoesForm(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(campo => {
-      //console.log(campo);
+      console.log(campo);
       const controle = formGroup.get(campo);
       controle?.markAsTouched();
       if(controle instanceof FormGroup) {
@@ -119,7 +120,8 @@ export class DataFormComponent implements OnInit{
   }
 
   verificaValidTouched(campo: any) {
-    if(!this.formulario.get(campo)?.valid && (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty)) {
+    if(!this.formulario.get(campo)?.valid &&
+    (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty)) {
       return true;
     } else {
       return false;
