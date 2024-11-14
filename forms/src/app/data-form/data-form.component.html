@@ -31,8 +31,12 @@
         <input formControlName="cep" type="text" class="form-control" id="cep"
         [ngClass]="aplicaCssErro('endereco.cep')" (blur)="consultarCEP()">
         <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('endereco.cep')"
+          [mostrarErro]="verificaRequired('endereco.cep')"
           msgErro="CEP é obrigatório!">
+        </app-campo-control-erro>
+        <app-campo-control-erro
+          [mostrarErro]="formulario.get('endereco.cep')?.hasError('cepInvalido') ? true : false"
+          msgErro="CEP inválido!">
         </app-campo-control-erro>
       </div>
 

@@ -60,7 +60,7 @@ export class DataFormComponent implements OnInit{
       email: [null, [Validators.required, Validators.email]],
 
       endereco: this.formBuilder.group({
-        cep: [null, Validators.required],
+        cep: [null, [Validators.required, FormValidations.cepValidator]],
         numero: [null, Validators.required],
         complemento: [null],
         rua: [null, Validators.required],
@@ -153,12 +153,22 @@ export class DataFormComponent implements OnInit{
     }
   }
 
+  verificaRequired(campo: any) {
+    if(this.formulario.get(campo)?.hasError('required') &&
+    (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   verificaEmailInvalido() {
     let campoEmail = this.formulario.controls['email'];
     if(campoEmail.errors) {
       return campoEmail.errors['email'] && campoEmail.touched;
     }
   }
+
 
   consultarCEP() {
     let cep = this.formulario.get('endereco.cep')?.value;
