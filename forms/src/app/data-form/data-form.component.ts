@@ -24,6 +24,7 @@ export class DataFormComponent implements OnInit{
   //estados: EstadoBr[];
   estados: Observable<EstadoBr[]>;
   cargos: any[];
+  tecnologias: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,6 +38,8 @@ export class DataFormComponent implements OnInit{
     this.estados = this.dropDownService.getEstadosBr();
 
     this.cargos = this.dropDownService.getCargos();
+
+    this.tecnologias = this.dropDownService.getTecnologias();
 
     /*this.dropDownService.getEstadosBr()
       .subscribe((res: EstadoBr[]) => {
@@ -62,8 +65,8 @@ export class DataFormComponent implements OnInit{
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
       }),
-
-      cargo: [null]
+      cargo: [null],
+      tecnologias: [null],
     });
 
     //Validators.pattern(coloque o regex aqui em string)
@@ -173,5 +176,9 @@ export class DataFormComponent implements OnInit{
 
   compararCargos(obj1: any, obj2: any) {
     return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+  }
+
+  setarTecnologias() {
+    this.formulario.get('tecnologias')?.setValue(['java', 'javascript', 'php']);
   }
 }
