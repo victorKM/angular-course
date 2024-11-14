@@ -124,13 +124,26 @@
   </div>
 
   <div class="form-group">
-    <div class="mb-3 col-md-3">
-      <input class="form-check-input" [ngClass]="aplicaCssErro('termos')" id="termos" type="checkbox" formControlName="termos">
-      <label for="termos" class="form-check-label" style="margin-left: 10px;">Aceito os termos</label>
-      <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('termos')"
-          msgErro="Por favor, aceite os termos!">
-      </app-campo-control-erro>
+    <div class="row align-items-center">
+      <div class="mb-3 col-md-3">
+        <input class="form-check-input" [ngClass]="aplicaCssErro('termos')" id="termos" type="checkbox" formControlName="termos">
+        <label for="termos" class="form-check-label" style="margin-left: 10px;">Aceito os termos</label>
+        <app-campo-control-erro
+            [mostrarErro]="verificaValidTouched('termos')"
+            msgErro="Por favor, aceite os termos!">
+        </app-campo-control-erro>
+      </div>
+
+      <div class="mb-3 col-md-4">
+        <label for="frameworks">Frameworks</label>
+        <div id="frameworks" class="row">
+          <div class="checkbox col-sm-3" formArrayName="frameworks" *ngFor="let item of frameworksArrayControls(); let i = index">
+            <label class="checkbox-inline">
+                <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
+            </label>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
 

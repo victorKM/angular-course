@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CampoControlErroComponent } from '../campo-control-erro/campo-control-erro.component';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
@@ -27,6 +27,8 @@ export class DataFormComponent implements OnInit{
   tecnologias: any[];
   newsletterOp: any[];
 
+  frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
+
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -37,11 +39,8 @@ export class DataFormComponent implements OnInit{
   ngOnInit(){
 
     this.estados = this.dropDownService.getEstadosBr();
-
     this.cargos = this.dropDownService.getCargos();
-
     this.tecnologias = this.dropDownService.getTecnologias();
-
     this.newsletterOp = this.dropDownService.getNewsletter();
 
     /*this.dropDownService.getEstadosBr()
@@ -71,15 +70,41 @@ export class DataFormComponent implements OnInit{
       cargo: [null],
       tecnologias: [null],
       newsletter: ['s'],
-      termos: [false, Validators.pattern('true')]
+      termos: [false, Validators.pattern('true')],
+      frameworks: this.buildFrameworks(),
     });
 
     //Validators.pattern(coloque o regex aqui em string)
+  }
 
+  buildFrameworks() {
+    const values = this.frameworks.map(v => new FormControl(false));
+    return this.formBuilder.array(values);
+
+    /*
+    this.formBuilder.array([
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false),
+      new FormControl(false),
+    ])
+    */
+  }
+
+  frameworksArrayControls() {
+    return (this.formulario.get('frameworks') as FormArray).controls;
   }
 
   onSubmit() {
     console.log(this.formulario);
+
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+      .map((v:any, i:any) => v ? this.frameworks[i] : null)
+      .filter((v: any) => v !== null)
+    })
 
     if(this.formulario.valid) {
       this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
@@ -100,7 +125,6 @@ export class DataFormComponent implements OnInit{
 
   verificaValidacoesForm(formGroup: FormGroup) {
     Object.keys(formGroup.controls).forEach(campo => {
-      console.log(campo);
       const controle = formGroup.get(campo);
       controle?.markAsTouched();
       if(controle instanceof FormGroup) {
