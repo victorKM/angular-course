@@ -3,14 +3,14 @@ import { VerificaEmailService } from './services/verifica-email.service';
 import { FormDebugComponent } from './../form-debug/form-debug.component';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CampoControlErroComponent } from '../campo-control-erro/campo-control-erro.component';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
-import { Observable } from 'rxjs';
+import { EMPTY, empty, Observable } from 'rxjs';
 import { FormValidations } from '../shared/form-validations';
 
 @Component({
@@ -45,6 +45,7 @@ export class DataFormComponent implements OnInit{
     // this.verificaEmailService.verificarEmail('email@email.com').subscribe();
 
     this.estados = this.dropDownService.getEstadosBr();
+
     this.cargos = this.dropDownService.getCargos();
     this.tecnologias = this.dropDownService.getTecnologias();
     this.newsletterOp = this.dropDownService.getNewsletter();
@@ -80,6 +81,17 @@ export class DataFormComponent implements OnInit{
       termos: [false, Validators.pattern('true')],
       frameworks: this.buildFrameworks(),
     });
+
+    this.formulario.get('endereco.cep')?.statusChanges
+      .pipe(
+        distinctUntilChanged(),
+        tap(value => console.log('valor CEP: ', value)),
+        switchMap(status => status === 'VALID' ?
+          this.cepService.consultaCEP(this.formulario.get('endereco.cep')?.value)
+          : EMPTY
+        )
+      )
+      .subscribe(dados => dados ? this.populaDadosForm(dados) : {});
 
     //Validators.pattern(coloque o regex aqui em string)
   }

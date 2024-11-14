@@ -30,7 +30,7 @@
       <div class="mb-3 col-md-3">
         <label for="cep" class="form-label">CEP</label>
         <input formControlName="cep" type="text" class="form-control" id="cep"
-        [ngClass]="aplicaCssErro('endereco.cep')" (blur)="consultarCEP()">
+        [ngClass]="aplicaCssErro('endereco.cep')">
         <app-error-msg [control]="$any(formulario.get('endereco.cep'))" label="CEP"></app-error-msg>
       </div>
 
