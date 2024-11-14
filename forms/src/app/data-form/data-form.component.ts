@@ -8,6 +8,7 @@ import { CampoControlErroComponent } from '../campo-control-erro/campo-control-e
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
@@ -20,8 +21,8 @@ import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 export class DataFormComponent implements OnInit{
 
   formulario: FormGroup;
-  estados: EstadoBr[];
-  teste: any;
+  //estados: EstadoBr[];
+  estados: Observable<EstadoBr[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,12 +33,13 @@ export class DataFormComponent implements OnInit{
 
   ngOnInit(){
 
-    this.estados = [];
-    this.dropDownService.getEstadosBr()
+    this.estados = this.dropDownService.getEstadosBr();
+
+    /*this.dropDownService.getEstadosBr()
       .subscribe((res: EstadoBr[]) => {
         this.estados = res;
         console.log(res);
-      });
+      });*/
 
     /*this.formulario = new FormGroup({
       nome: new FormControl(null),
