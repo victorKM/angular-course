@@ -4,35 +4,17 @@
     <label for="nome" class="form-label">Nome</label>
     <input formControlName="nome" type="text" class="form-control" [ngClass]="aplicaCssErro('nome')"
     id="nome" placeholder="Nome" >
-    <app-campo-control-erro
-      [mostrarErro]="verificaValidTouched('nome')"
-      msgErro="Nome obrigatório!">
-    </app-campo-control-erro>
+    <app-error-msg [control]="$any(formulario.get('nome'))" label="Nome"></app-error-msg>
   </div>
 
   <div class="mb-3 col-md-12">
     <label for="email" class="form-label">Email</label>
     <input formControlName="email" type="email" class="form-control"
     id="email" placeholder="nome@email.com" [ngClass]="aplicaCssErro('email')">
-    <app-campo-control-erro
-      [mostrarErro]="(formulario.get('email')?.hasError('required') && formulario.get('email')?.touched) ? true : false"
-      msgErro="Email obrigatório!">
-    </app-campo-control-erro>
-    <app-campo-control-erro
-      [mostrarErro]="verificaEmailInvalido()"
-      msgErro="Email inválido!">
-    </app-campo-control-erro>
+    <app-error-msg [control]="$any(formulario.get('email'))" label="Email"></app-error-msg>
     <app-campo-control-erro
       [mostrarErro]="formulario.get('email')?.status === 'PENDING'"
       msgErro="Validando email...">
-    </app-campo-control-erro>
-    <app-campo-control-erro
-      [mostrarErro]="formulario.get('email')?.status === 'VALID'"
-      msgErro="Email válido">
-    </app-campo-control-erro>
-    <app-campo-control-erro
-      [mostrarErro]="formulario.get('email')?.hasError('emailInvalido') ? true : false"
-      msgErro="Email já existe">
     </app-campo-control-erro>
   </div>
 
@@ -40,10 +22,7 @@
     <label for="confirmarEmail" class="form-label">Confirmar Email</label>
     <input formControlName="confirmarEmail" type="email" class="form-control"
     id="confirmarEmail" placeholder="nome@email.com" [ngClass]="aplicaCssErro('confirmarEmail')">
-    <app-campo-control-erro
-      [mostrarErro]="formulario.get('confirmarEmail')?.hasError('equalsTo') ? true : false"
-      msgErro="Emails não são iguais">
-    </app-campo-control-erro>
+    <app-error-msg [control]="$any(formulario.get('confirmarEmail'))" label="Confirmar Email"></app-error-msg>
   </div>
 
   <div formGroupName="endereco">
@@ -52,61 +31,39 @@
         <label for="cep" class="form-label">CEP</label>
         <input formControlName="cep" type="text" class="form-control" id="cep"
         [ngClass]="aplicaCssErro('endereco.cep')" (blur)="consultarCEP()">
-        <app-campo-control-erro
-          [mostrarErro]="verificaRequired('endereco.cep')"
-          msgErro="CEP é obrigatório!">
-        </app-campo-control-erro>
-        <app-campo-control-erro
-          [mostrarErro]="formulario.get('endereco.cep')?.hasError('cepInvalido') ? true : false"
-          msgErro="CEP inválido!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('endereco.cep'))" label="CEP"></app-error-msg>
       </div>
 
       <div class="mb-3 col-md-3">
         <label for="numero" class="form-label">Número</label>
         <input formControlName="numero" type="text" class="form-control" id="numero" [ngClass]="aplicaCssErro('endereco.numero')">
-        <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('endereco.numero')"
-          msgErro="Número é obrigatório!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('endereco.numero'))" label="Número"></app-error-msg>
       </div>
 
       <div class="mb-3 col-md-6">
         <label for="complemento" class="form-label">Complemento</label>
         <input formControlName="complemento" type="text" class="form-control" id="complemento" [ngClass]="aplicaCssErro('endereco.complemento')">
-        <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('endereco.complemento')"
-          msgErro="Complemento é obrigatório!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('endereco.complemento'))" label="Complemento"></app-error-msg>
       </div>
     </div>
 
     <div class="mb-3 col-md-12">
       <label for="rua" class="form-label">Rua</label>
       <input formControlName="rua" type="text" class="form-control" id="rua" [ngClass]="aplicaCssErro('endereco.rua')">
-      <app-campo-control-erro
-        [mostrarErro]="verificaValidTouched('endereco.rua')"
-        msgErro="Rua é obrigatório!">
-      </app-campo-control-erro>
+      <app-error-msg [control]="$any(formulario.get('endereco.rua'))" label="Rua"></app-error-msg>
     </div>
 
     <div class="row">
       <div class="mb-3 col-md-5">
         <label for="bairro" class="form-label">Bairro</label>
         <input formControlName="bairro" type="text" class="form-control" id="bairro" [ngClass]="aplicaCssErro('endereco.bairro')">
-        <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('endereco.bairro')"
-          msgErro="Bairro é obrigatório!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('endereco.bairro'))" label="Bairro"></app-error-msg>
       </div>
 
       <div class="mb-3 col-md-4">
         <label for="cidade" class="form-label">Cidade</label>
         <input formControlName="cidade" type="text" class="form-control" id="cidade" [ngClass]="aplicaCssErro('endereco.cidade')">
-        <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('endereco.cidade')"
-          msgErro="Cidade é obrigatório!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('endereco.cidade'))" label="Cidade"></app-error-msg>
       </div>
 
       <div class="mb-3 col-md-3">
@@ -114,10 +71,7 @@
         <select formControlName="estado" class="form-control" id="estado" [ngClass]="aplicaCssErro('endereco.estado')">
           <option *ngFor="let estado of estados | async" [value]="estado.sigla">{{ estado.nome }}</option>
         </select>
-        <app-campo-control-erro
-          [mostrarErro]="verificaValidTouched('endereco.estado')"
-          msgErro="Estado é obrigatório!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('endereco.estado'))" label="Estado"></app-error-msg>
       </div>
     </div>
   </div>

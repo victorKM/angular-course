@@ -1,3 +1,4 @@
+import { ErrorMsgComponent } from './../shared/error-msg/error-msg.component';
 import { VerificaEmailService } from './services/verifica-email.service';
 import { FormDebugComponent } from './../form-debug/form-debug.component';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,7 @@ import { FormValidations } from '../shared/form-validations';
   selector: 'app-data-form',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule,
-  FormDebugComponent, CampoControlErroComponent],
+  FormDebugComponent, CampoControlErroComponent, ErrorMsgComponent],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.scss'
 })
@@ -60,7 +61,7 @@ export class DataFormComponent implements OnInit{
     });*/
 
     this.formulario = this.formBuilder.group({
-      nome: [null,Validators.required],
+      nome: [null, [Validators.required, Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.email], this.validarEmail.bind(this)],
       confirmarEmail: [null, FormValidations.equalsTo('email')],
 
@@ -169,6 +170,7 @@ export class DataFormComponent implements OnInit{
 
   verificaEmailInvalido() {
     let campoEmail = this.formulario.controls['email'];
+    console.log(campoEmail.errors);
     if(campoEmail.errors) {
       return campoEmail.errors['email'] && campoEmail.touched;
     }
