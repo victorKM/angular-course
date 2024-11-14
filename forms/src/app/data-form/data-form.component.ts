@@ -1,29 +1,41 @@
 import { FormDebugComponent } from './../form-debug/form-debug.component';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CampoControlErroComponent } from '../campo-control-erro/campo-control-erro.component';
+import { DropdownService } from '../shared/services/dropdown.service';
+import { EstadoBr } from '../shared/models/estado-br';
 
 @Component({
   selector: 'app-data-form',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule,
-  FormDebugComponent, HttpClientModule, CampoControlErroComponent],
+  FormDebugComponent, CampoControlErroComponent],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.scss'
 })
 export class DataFormComponent implements OnInit{
 
   formulario: FormGroup;
+  estados: EstadoBr[];
+  teste: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private dropDownService: DropdownService
   ) {}
 
   ngOnInit(){
+
+    this.estados = [];
+    this.dropDownService.getEstadosBr()
+      .subscribe((res: EstadoBr[]) => {
+        this.estados = res;
+        console.log(res);
+      });
 
     /*this.formulario = new FormGroup({
       nome: new FormControl(null),
