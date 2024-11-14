@@ -134,14 +134,18 @@
         </app-campo-control-erro>
       </div>
 
-      <div class="mb-3 col-md-4">
+      <div class="mb-3 col-md-7">
         <label for="frameworks">Frameworks</label>
         <div id="frameworks" class="row">
           <div class="checkbox col-sm-3" formArrayName="frameworks" *ngFor="let item of frameworksArrayControls(); let i = index">
             <label class="checkbox-inline">
                 <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
             </label>
-        </div>
+          </div>
+          <app-campo-control-erro
+            [mostrarErro]="verificaValidTouched('frameworks')"
+            msgErro="Selecione 1 opção">
+          </app-campo-control-erro>
         </div>
       </div>
     </div>
