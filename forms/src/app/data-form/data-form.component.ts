@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { CampoControlErroComponent } from '../campo-control-erro/campo-control-erro.component';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br';
+import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-data-form',
@@ -25,7 +26,8 @@ export class DataFormComponent implements OnInit{
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private dropDownService: DropdownService
+    private dropDownService: DropdownService,
+    private cepService: ConsultaCepService
   ) {}
 
   ngOnInit(){
@@ -118,22 +120,14 @@ export class DataFormComponent implements OnInit{
   }
 
   consultarCEP() {
-
     let cep = this.formulario.get('endereco.cep')?.value;
+
     //Nova variável "cep" somente com dígitos
     cep = cep.replace(/\D/g, '');
 
-    //Verifica se campo cep possui valor informado.
-    if(cep != "") {
-      var validacep = /^[0-9]{8}$/;
-      if(validacep.test(cep)) {
-
-        this.resetaDadosForm();
-
-        this.http.get(`//viacep.com.br/ws/${cep}/json`)
-        .pipe(map((response: any) => response))
-        .subscribe(response => this.populaDadosForm(response));
-      }
+    if(cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+        ?.subscribe(response => this.populaDadosForm(response));
     }
   }
 

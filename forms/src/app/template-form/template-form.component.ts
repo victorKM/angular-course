@@ -5,6 +5,7 @@ import { FormDebugComponent } from '../form-debug/form-debug.component';
 import { CampoControlErroComponent } from '../campo-control-erro/campo-control-erro.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-template-form',
@@ -21,7 +22,10 @@ export class TemplateFormComponent implements OnInit{
     email: null
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private cepService: ConsultaCepService
+  ) { }
 
   ngOnInit(): void {
 
@@ -52,17 +56,9 @@ export class TemplateFormComponent implements OnInit{
     //Nova variável "cep" somente com dígitos
     cep = cep.replace(/\D/g, '');
 
-    //Verifica se campo cep possui valor informado.
-    if(cep != "") {
-      var validacep = /^[0-9]{8}$/;
-      if(validacep.test(cep)) {
-
-        this.resetaDadosForm(form);
-
-        this.http.get(`//viacep.com.br/ws/${cep}/json`)
-        .pipe(map((response: any) => response))
-        .subscribe(response => this.populaDadosForm(response, form));
-      }
+    if(cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+       ?.subscribe(response => this.populaDadosForm(response, form));
     }
   }
 
