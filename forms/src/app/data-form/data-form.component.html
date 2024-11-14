@@ -96,9 +96,18 @@
     </div>
   </div>
 
-  <div class="mb-3 col-md-6">
+  <div class="mb-3 col-md-3">
+    <label for="cargo" class="form-label">Cargo</label>
+    <select formControlName="cargo" class="form-control" id="cargo"
+    [ngClass]="aplicaCssErro('cargo')" [compareWith]="compararCargos">
+      <option *ngFor="let cargo of cargos" [ngValue]="cargo">{{ cargo.desc }}</option>
+    </select>
+  </div>
+
+  <div class="mb-3 col-md-12">
     <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Submit</button>
-    <button class="btn btn-secondary" (click)="resetar()">Cancelar</button>
+    <button class="btn btn-secondary" (click)="resetar()" style="margin-right: 5px;">Cancelar</button>
+    <button class="btn btn-secondary" (click)="setarCargo()">Cargo</button>
   </div>
 
 
