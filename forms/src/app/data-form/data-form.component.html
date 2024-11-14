@@ -1,11 +1,16 @@
 <form class="row gy-2 gx-3 align-items-center" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-  <div class="mb-3 col-md-12">
+  <app-input-field
+   [classeCss]="aplicaCssErro('nome')" formControlName="nome"
+   id="nome" label="Nome" [control]="$any(formulario.get('nome'))">
+  </app-input-field>
+
+  <!-- <div class="mb-3 col-md-12">
     <label for="nome" class="form-label">Nome</label>
     <input formControlName="nome" type="text" class="form-control" [ngClass]="aplicaCssErro('nome')"
     id="nome" placeholder="Nome" >
     <app-error-msg [control]="$any(formulario.get('nome'))" label="Nome"></app-error-msg>
-  </div>
+  </div> -->
 
   <div class="mb-3 col-md-12">
     <label for="email" class="form-label">Email</label>
@@ -108,10 +113,7 @@
       <div class="mb-3 col-md-3">
         <input class="form-check-input" [ngClass]="aplicaCssErro('termos')" id="termos" type="checkbox" formControlName="termos">
         <label for="termos" class="form-check-label" style="margin-left: 10px;">Aceito os termos</label>
-        <app-campo-control-erro
-            [mostrarErro]="verificaValidTouched('termos')"
-            msgErro="Por favor, aceite os termos!">
-        </app-campo-control-erro>
+        <app-error-msg [control]="$any(formulario.get('termos'))" label="Aceite os termos!"></app-error-msg>
       </div>
 
       <div class="mb-3 col-md-7">
@@ -122,10 +124,7 @@
                 <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
             </label>
           </div>
-          <app-campo-control-erro
-            [mostrarErro]="verificaValidTouched('frameworks')"
-            msgErro="Selecione 1 opção">
-          </app-campo-control-erro>
+          <app-error-msg [control]="$any(formulario.get('frameworks'))" label="Frameworks"></app-error-msg>
         </div>
       </div>
     </div>

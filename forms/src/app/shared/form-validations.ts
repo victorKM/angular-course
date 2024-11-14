@@ -72,6 +72,7 @@ export class FormValidations {
       'equalsTo': 'Emails não são iguais',
       'email': 'Email inválido',
       'emailInvalido': 'Email já existe',
+      'pattern': `${fieldName}`
     };
 
     return config[validatorName];

@@ -12,12 +12,14 @@ import { EstadoBr } from '../shared/models/estado-br';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 import { EMPTY, empty, Observable } from 'rxjs';
 import { FormValidations } from '../shared/form-validations';
+import { InputFieldComponent } from '../shared/input-field/input-field.component';
 
 @Component({
   selector: 'app-data-form',
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule,
-  FormDebugComponent, CampoControlErroComponent, ErrorMsgComponent],
+  FormDebugComponent, CampoControlErroComponent, ErrorMsgComponent,
+  InputFieldComponent],
   templateUrl: './data-form.component.html',
   styleUrl: './data-form.component.scss'
 })
