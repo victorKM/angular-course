@@ -1,3 +1,4 @@
+import { VerificaEmailService } from './services/verifica-email.service';
 import { FormDebugComponent } from './../form-debug/form-debug.component';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -34,10 +35,13 @@ export class DataFormComponent implements OnInit{
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private dropDownService: DropdownService,
-    private cepService: ConsultaCepService
+    private cepService: ConsultaCepService,
+    private verificaEmailService: VerificaEmailService
   ) {}
 
   ngOnInit(){
+
+    // this.verificaEmailService.verificarEmail('email@email.com').subscribe();
 
     this.estados = this.dropDownService.getEstadosBr();
     this.cargos = this.dropDownService.getCargos();
@@ -57,7 +61,7 @@ export class DataFormComponent implements OnInit{
 
     this.formulario = this.formBuilder.group({
       nome: [null,Validators.required],
-      email: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required, Validators.email], this.validarEmail.bind(this)],
       confirmarEmail: [null, FormValidations.equalsTo('email')],
 
       endereco: this.formBuilder.group({
@@ -222,5 +226,10 @@ export class DataFormComponent implements OnInit{
 
   setarTecnologias() {
     this.formulario.get('tecnologias')?.setValue(['java', 'javascript', 'php']);
+  }
+
+  validarEmail(formControl: FormControl) {
+    return this.verificaEmailService.verificarEmail(formControl.value)
+      .pipe(map(emailExiste => emailExiste ? { emailInvalido: true } : null));
   }
 }

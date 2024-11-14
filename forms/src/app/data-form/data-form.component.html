@@ -15,12 +15,24 @@
     <input formControlName="email" type="email" class="form-control"
     id="email" placeholder="nome@email.com" [ngClass]="aplicaCssErro('email')">
     <app-campo-control-erro
-      [mostrarErro]="verificaValidTouched('email')"
+      [mostrarErro]="(formulario.get('email')?.hasError('required') && formulario.get('email')?.touched) ? true : false"
       msgErro="Email obrigatório!">
     </app-campo-control-erro>
     <app-campo-control-erro
       [mostrarErro]="verificaEmailInvalido()"
       msgErro="Email inválido!">
+    </app-campo-control-erro>
+    <app-campo-control-erro
+      [mostrarErro]="formulario.get('email')?.status === 'PENDING'"
+      msgErro="Validando email...">
+    </app-campo-control-erro>
+    <app-campo-control-erro
+      [mostrarErro]="formulario.get('email')?.status === 'VALID'"
+      msgErro="Email válido">
+    </app-campo-control-erro>
+    <app-campo-control-erro
+      [mostrarErro]="formulario.get('email')?.hasError('emailInvalido') ? true : false"
+      msgErro="Email já existe">
     </app-campo-control-erro>
   </div>
 
@@ -110,7 +122,7 @@
     </div>
   </div>
 
-  <div class="mb-3 col-md-3">
+  <div class="mb-3 col-md-5">
     <label for="cargo" class="form-label">Cargo</label>
     <select formControlName="cargo" class="form-control" id="cargo"
     [ngClass]="aplicaCssErro('cargo')" [compareWith]="compararCargos">
@@ -118,7 +130,7 @@
     </select>
   </div>
 
-  <div class="mb-3 col-md-3">
+  <div class="mb-3 col-md-5">
     <label for="tecnologias" class="form-label">Tecnologias</label>
     <select multiple formControlName="tecnologias" class="form-control" id="tecnologias"
     [ngClass]="aplicaCssErro('tecnologia')">
@@ -126,7 +138,7 @@
     </select>
   </div>
 
-  <div class="mb-3 col-md-3">
+  <div class="mb-3 col-md-2">
     <label for="newsletter" class="form-label">Newsletter</label>
     <div id="newsletter" class="row">
       <div class="col-sm-4" *ngFor="let item of newsletterOp">
