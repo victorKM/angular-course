@@ -25,6 +25,7 @@ export class DataFormComponent implements OnInit{
   estados: Observable<EstadoBr[]>;
   cargos: any[];
   tecnologias: any[];
+  newsletterOp: any[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +41,8 @@ export class DataFormComponent implements OnInit{
     this.cargos = this.dropDownService.getCargos();
 
     this.tecnologias = this.dropDownService.getTecnologias();
+
+    this.newsletterOp = this.dropDownService.getNewsletter();
 
     /*this.dropDownService.getEstadosBr()
       .subscribe((res: EstadoBr[]) => {
@@ -67,6 +70,7 @@ export class DataFormComponent implements OnInit{
       }),
       cargo: [null],
       tecnologias: [null],
+      newsletter: ['s'],
     });
 
     //Validators.pattern(coloque o regex aqui em string)

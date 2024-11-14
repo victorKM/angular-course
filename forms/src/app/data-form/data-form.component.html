@@ -112,6 +112,17 @@
     </select>
   </div>
 
+  <div class="mb-3 col-md-3">
+    <label for="newsletter" class="form-label">Newsletter</label>
+    <div id="newsletter" class="row">
+      <div class="col-sm-4" *ngFor="let item of newsletterOp">
+        <label for="radio-inline">
+          <input type="radio" [value]="item.valor" formControlName="newsletter" [ngClass]="aplicaCssErro('newsletter')"/> {{ item.desc }}
+        </label>
+      </div>
+    </div>
+  </div>
+
   <div class="mb-3 col-md-12">
     <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Submit</button>
     <button class="btn btn-secondary" (click)="resetar()" style="margin-right: 5px;">Cancelar</button>
