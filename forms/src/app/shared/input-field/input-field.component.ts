@@ -25,6 +25,7 @@
     @Input() type = 'text';
     @Input() control: any;
     @Input() isReadOnly = false;
+    @Input() placeholder: string;
 
     private innerValue: any;
 
@@ -39,8 +40,8 @@
       }
     }
 
-    onChangeCb: (_: any) => void = () => {};
-    onTouchedCb: (_: any) => void = () => {};
+    onChangeCb: any = () => {};
+    onTouchedCb: any = () => {};
 
     writeValue(v: any): void {
       this.value = v;
