@@ -1,27 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Curso } from './curso';
-import { delay, tap } from 'rxjs';
+import { delay, take, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CursosService implements OnInit{
-
+export class CursosService implements OnInit {
   private readonly API = `${environment.API}cursos`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   list() {
-    return this.http.get<Curso[]>(this.API)
-      .pipe(
-        delay(2000),
-        tap(console.log)
-      );
+    return this.http.get<Curso[]>(this.API).pipe(delay(2000), tap(console.log));
   }
 
-  ngOnInit(){
-
+  create(curso: any) {
+    return this.http.post(this.API, curso).pipe(take(1));
   }
+
+  ngOnInit() {}
 }
