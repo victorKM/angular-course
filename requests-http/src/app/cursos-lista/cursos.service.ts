@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Curso } from './curso';
 import { tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CursosService {
+export class CursosService implements OnInit{
 
-  private readonly API = 'http://localhost:3000/cursos';
+  private readonly API = `${environment.API}cursos`;
 
   constructor(private http: HttpClient) { }
 
@@ -17,5 +18,9 @@ export class CursosService {
       .pipe(
         tap(console.log)
       );
+  }
+
+  ngOnInit(){
+
   }
 }
