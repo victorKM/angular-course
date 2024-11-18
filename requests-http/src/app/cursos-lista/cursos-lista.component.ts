@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CursosService } from './cursos.service';
 import { Curso } from './curso';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cursos-lista',
@@ -15,12 +16,16 @@ import { Curso } from './curso';
 })
 export class CursosListaComponent implements OnInit{
 
-  cursos: Curso[];
+  //cursos: Curso[];
+
+  cursos$: Observable<Curso[]>;
 
   constructor(private service: CursosService) {}
 
   ngOnInit() {
-      this.service.list()
-      .subscribe(dados => this.cursos = dados);
+      // this.service.list()
+      // .subscribe(dados => this.cursos = dados);
+
+      this.cursos$ = this.service.list();
   }
 }
