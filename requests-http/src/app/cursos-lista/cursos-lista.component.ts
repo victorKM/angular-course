@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CursosService } from './cursos.service';
@@ -25,9 +25,14 @@ export class CursosListaComponent implements OnInit {
   error$ = new Subject<boolean>();
   // bsModalRef?: BsModalRef;
 
+  deleteModalRef: BsModalRef;
+  @ViewChild('deleteModal') deleteModal: any;
+
+  cursoSelecionado: Curso;
+
   constructor(
     private service: CursosService,
-    // private modalService: BsModalService
+    private modalService: BsModalService,
     private alertService: AlertModalService,
     private router: Router,
     private route: ActivatedRoute
@@ -74,5 +79,32 @@ export class CursosListaComponent implements OnInit {
 
   onEdit(cursoId: number) {
     this.router.navigate(['editar', cursoId], { relativeTo: this.route });
+  }
+
+  onDelete(curso: any) {
+    this.cursoSelecionado = curso;
+    this.deleteModalRef = this.modalService.show(this.deleteModal, {
+      class: 'modal-sm',
+    });
+  }
+
+  onConfirmDelete() {
+    this.service.remove(this.cursoSelecionado.id).subscribe({
+      next: (success) => {
+        this.alertService.showAlertSuccess('Curso removido com sucesso!');
+        this.onRefresh();
+        this.deleteModalRef.hide();
+      },
+      error: (error) => {
+        this.alertService.showAlertDanger(
+          'Erro ao remover curso. Tente novamente mais tarde.'
+        );
+        this.deleteModalRef.hide();
+      },
+    });
+  }
+
+  onDeclineDelete() {
+    this.deleteModalRef.hide();
   }
 }
