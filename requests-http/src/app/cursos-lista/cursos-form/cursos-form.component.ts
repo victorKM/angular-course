@@ -88,17 +88,53 @@ export class CursosFormComponent implements OnInit {
     console.log(this.form.value);
     if (this.form.valid) {
       console.log('submit');
-      this.cursoService.create(this.form.value).subscribe({
+
+      let msgSucesso = 'Curso criado com sucesso!';
+      let msgErro = 'Erro ao criar curso, tente novamente!';
+      if (this.form.value.id) {
+        msgSucesso = 'Curso atualizado com sucesso!';
+        msgErro = 'Erro ao atualizar curso, tente novamente!';
+      }
+
+      this.cursoService.save(this.form.value).subscribe({
         next: (success) => {
-          this.modal.showAlertSuccess('Criado com sucesso');
+          this.modal.showAlertSuccess(msgSucesso);
           setTimeout(() => {
             this.location.back();
           }, 3000);
         },
-        error: (error) =>
-          this.modal.showAlertDanger('Erro ao criar curso, tente novamente!'),
-        complete: () => console.log('request completo'),
+        error: (error) => this.modal.showAlertDanger(msgErro),
       });
+
+      // if (this.form.value.id) {
+      //   //update
+      //   this.cursoService.update(this.form.value).subscribe({
+      //     next: (success) => {
+      //       this.modal.showAlertSuccess('Atualizado com sucesso');
+      //       setTimeout(() => {
+      //         this.location.back();
+      //       }, 3000);
+      //     },
+      //     error: (error) =>
+      //       this.modal.showAlertDanger(
+      //         'Erro ao atualizar curso, tente novamente!'
+      //       ),
+      //     complete: () => console.log('update completo'),
+      //   });
+      // } else {
+      //   // create
+      //   this.cursoService.create(this.form.value).subscribe({
+      //     next: (success) => {
+      //       this.modal.showAlertSuccess('Criado com sucesso');
+      //       setTimeout(() => {
+      //         this.location.back();
+      //       }, 3000);
+      //     },
+      //     error: (error) =>
+      //       this.modal.showAlertDanger('Erro ao criar curso, tente novamente!'),
+      //     complete: () => console.log('request completo'),
+      //   });
+      // }
     }
   }
 
