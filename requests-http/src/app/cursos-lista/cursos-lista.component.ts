@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CursosService } from './cursos.service';
 import { Curso } from './curso';
 import { catchError, EMPTY, Observable, Subject } from 'rxjs';
@@ -16,10 +16,9 @@ import { AlertModalService } from '../shared/alert-modal.service';
   providers: [BsModalService, AlertModalService],
   templateUrl: './cursos-lista.component.html',
   styleUrl: './cursos-lista.component.scss',
-  preserveWhitespaces: true
+  preserveWhitespaces: true,
 })
-export class CursosListaComponent implements OnInit{
-
+export class CursosListaComponent implements OnInit {
   //cursos: Curso[];
 
   cursos$: Observable<Curso[]>;
@@ -29,26 +28,27 @@ export class CursosListaComponent implements OnInit{
   constructor(
     private service: CursosService,
     // private modalService: BsModalService
-    private alertService: AlertModalService
+    private alertService: AlertModalService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-      // this.service.list()
-      // .subscribe(dados => this.cursos = dados);
+    // this.service.list()
+    // .subscribe(dados => this.cursos = dados);
 
-      this.onRefresh();
+    this.onRefresh();
   }
 
   onRefresh() {
-    this.cursos$ = this.service.list()
-      .pipe(
-        catchError(error => {
-          console.error(error);
-          // this.error$.next(true);
-          this.handleError();
-          return EMPTY;
-        })
-      );
+    this.cursos$ = this.service.list().pipe(
+      catchError((error) => {
+        console.error(error);
+        // this.error$.next(true);
+        this.handleError();
+        return EMPTY;
+      })
+    );
 
     // this.service.list()
     //   .pipe(
@@ -64,9 +64,15 @@ export class CursosListaComponent implements OnInit{
   }
 
   handleError() {
-    this.alertService.showAlertDanger('Erro ao carregar cursos. Tente novamente mais tarde.');
+    this.alertService.showAlertDanger(
+      'Erro ao carregar cursos. Tente novamente mais tarde.'
+    );
     // this.bsModalRef = this.modalService.show(AlertModalComponent);
     // this.bsModalRef.content.type = 'danger';
     // this.bsModalRef.content.message = 'Erro ao carregar cursos. Tente novamente mais tarde.';
+  }
+
+  onEdit(cursoId: number) {
+    this.router.navigate(['editar', cursoId], { relativeTo: this.route });
   }
 }

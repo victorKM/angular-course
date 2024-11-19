@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class CursosService implements OnInit {
+export class CursosService {
   private readonly API = `${environment.API}cursos`;
 
   constructor(private http: HttpClient) {}
@@ -16,9 +16,11 @@ export class CursosService implements OnInit {
     return this.http.get<Curso[]>(this.API).pipe(delay(2000), tap(console.log));
   }
 
+  loadById(id: number) {
+    return this.http.get(`${this.API}/${id}`).pipe(take(1));
+  }
+
   create(curso: any) {
     return this.http.post(this.API, curso).pipe(take(1));
   }
-
-  ngOnInit() {}
 }
