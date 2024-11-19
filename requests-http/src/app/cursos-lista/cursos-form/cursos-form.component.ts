@@ -13,6 +13,7 @@ import { AlertModalService } from '../../shared/alert-modal.service';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
+import { Cursos2Service } from '../cursos2.service';
 
 @Component({
   selector: 'app-cursos-form',
@@ -28,7 +29,7 @@ export class CursosFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private cursoService: CursosService,
+    private cursoService: Cursos2Service,
     private modal: AlertModalService,
     private location: Location,
     private route: ActivatedRoute
