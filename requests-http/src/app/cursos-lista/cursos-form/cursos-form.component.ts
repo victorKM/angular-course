@@ -46,21 +46,23 @@ export class CursosFormComponent implements OnInit {
 
     //route.params n precisa unsubscribe, pois o angular neste caso cuida disso
 
-    this.route.params
-      .pipe(
-        map((params: any) => params['id']),
-        switchMap((id) => this.cursoService.loadById(id))
-      )
-      .subscribe((curso: any) => this.updateForm(curso));
+    // this.route.params
+    //   .pipe(
+    //     map((params: any) => params['id']),
+    //     switchMap((id) => this.cursoService.loadById(id))
+    //   )
+    //   .subscribe((curso: any) => this.updateForm(curso));
 
     // concatMap -> ordem da requisição importa
     // mergeMap -> ordem nao importa (mais usado)
     // exhaustMap -> casos de login
 
+    const curso = this.route.snapshot.data['curso'];
+
     this.form = this.fb.group({
-      id: [null],
+      id: [curso.id],
       nome: [
-        null,
+        curso.nome,
         [
           Validators.required,
           Validators.minLength(3),
@@ -70,12 +72,12 @@ export class CursosFormComponent implements OnInit {
     });
   }
 
-  updateForm(curso: any) {
-    this.form.patchValue({
-      id: curso.id,
-      nome: curso.nome,
-    });
-  }
+  // updateForm(curso: any) {
+  //   this.form.patchValue({
+  //     id: curso.id,
+  //     nome: curso.nome,
+  //   });
+  // }
 
   hasError(field: string) {
     return this.form.get(field)?.errors;
