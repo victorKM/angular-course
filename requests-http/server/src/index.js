@@ -1,16 +1,16 @@
 const express = require("express");
-const cors = require("cors");
+// const cors = require("cors");
 const multipart = require("connect-multiparty");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const corsOptions = {
-  origin: "*",
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "*",
+//   optionSuccessStatus: 200,
+// };
+// app.use(cors(corsOptions));
 
 const multipartMiddleware = multipart({ uploadDir: "./uploads" });
 app.post("/upload", multipartMiddleware, (red, res) => {
