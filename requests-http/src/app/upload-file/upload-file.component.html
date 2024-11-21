@@ -4,7 +4,7 @@
     <input class="form-control" type="file" id="formFile" />
   </div> -->
 
-  <div class="mb-3">
+  <div class="mb-2">
     <label for="formFileMultiple" class="form-label">Selecione arquivos</label>
     <input
       class="form-control"
@@ -14,8 +14,13 @@
       (change)="onChange($event)"
     />
   </div>
+  <div class="progress">
+    <div class="progress-bar" role="progressbar" [style.width]="progress + '%'">
+      {{ progress }}%
+    </div>
+  </div>
 </div>
-<div style="padding-top: 10px">
+<div style="padding-top: 20px">
   <button
     type="button"
     class="btn btn-primary"
