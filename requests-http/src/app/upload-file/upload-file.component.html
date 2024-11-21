@@ -1,11 +1,27 @@
 <div style="padding-top: 20px">
-  <div class="mb-3">
+  <!-- <div class="mb-3">
     <label for="formFile" class="form-label">Selecionar arquivo</label>
     <input class="form-control" type="file" id="formFile" />
-  </div>
+  </div> -->
 
   <div class="mb-3">
     <label for="formFileMultiple" class="form-label">Selecione arquivos</label>
-    <input class="form-control" type="file" id="formFileMultiple" multiple />
+    <input
+      class="form-control"
+      type="file"
+      id="formFileMultiple"
+      multiple
+      (change)="onChange($event)"
+    />
   </div>
+</div>
+<div style="padding-top: 10px">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="onUpload()"
+    [disabled]="!files"
+  >
+    Upload
+  </button>
 </div>
